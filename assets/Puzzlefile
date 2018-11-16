@@ -1,0 +1,37 @@
+FROM ubuntu:trusty
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get install -y software-properties-common python-software-properties
+
+PUZZLE php-libs
+
+RUN a2enmod rewrite && \
+    a2enmod rpaf && \
+    a2enmod actions && \
+    a2enmod fastcgi && \
+    a2enmod vhost_alias && \
+    a2enmod headers \
+    && a2enmod proxy_fcgi setenvif \
+    && a2enconf php7.1-fpm \
+    && phpenmod opcache \
+	# Composer
+    && curl -fSL "https://getcomposer.org/installer" -o composer-setup.php \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php \
+    && composer global require hirak/prestissimo;
+
+EXPOSE 80
+
+WORKDIR /var/www/html
+
+COPY ./build/images/web/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+
+COPY ./web /var/www/html
+
+RUN chmod 777 /var/www/html/bootstrap/cache /var/www/html/storage \
+    && cp -n /var/www/html/.env.example /var/www/html/.env \
+    && php artisan key:generate
+
+CMD ["apache2ctl", "-D", "FOREGROUND"]

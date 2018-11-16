@@ -1,0 +1,6 @@
+[package]
+name = "docker-puzzles"
+version = "0.1.0"
+authors = ["Balázs Kovács <kobalazs@gmail.com>"]
+
+[dependencies]
