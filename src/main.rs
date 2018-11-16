@@ -1,6 +1,8 @@
+extern crate docker_puzzles;
+
 use std::path::Path;
 use std::fs::File;
-use std::io::{BufReader, BufRead};
+use docker_puzzles::puzzles_parser::parse;
 
 fn main() {
     let path = Path::new("./assets");
@@ -11,13 +13,7 @@ fn main() {
             if let Some(file_name) = file_name {
                 if file_name == "Puzzles" {
                     let input = File::open(path.clone()).expect("Cannot open file");
-                    let buffered = BufReader::new(input);
-
-                    for line in buffered.lines() {
-                        if let Ok(line) = line {
-                            println!("{}", line);
-                        }
-                    }
+                    parse(input);
                 }
             }
         }

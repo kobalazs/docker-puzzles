@@ -1,3 +1,5 @@
+pub mod puzzles_parser;
+
 #[cfg(test)]
 mod tests {
     #[test]
