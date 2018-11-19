@@ -1,7 +1,7 @@
 extern crate docker_puzzles;
 
 use std::path::Path;
-use std::fs::File;
+use std::fs;
 use docker_puzzles::puzzles_parser::parse;
 
 fn main() {
@@ -11,8 +11,8 @@ fn main() {
             let path = entry.path();
             let file_name = path.file_name();
             if let Some(file_name) = file_name {
-                if file_name == "Puzzles" {
-                    let input = File::open(path.clone()).expect("Cannot open file");
+                if file_name == "Puzzles.yml" {
+                    let input = fs::read_to_string(path.clone()).expect("Cannot open file");
                     parse(input);
                 }
             }
