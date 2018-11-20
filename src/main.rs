@@ -13,7 +13,7 @@ fn main() {
             if let Some(file_name) = file_name {
                 if file_name == "Puzzles.yml" {
                     let input = fs::read_to_string(path.clone()).expect("Cannot open file");
-                    parse(input);
+                    print!("{:?}", parse(input));
                 }
             }
         }

@@ -1,21 +1,15 @@
+extern crate linked_hash_map;
 extern crate yaml_rust;
 
-use self::yaml_rust::{YamlLoader, YamlEmitter};
+use self::linked_hash_map::LinkedHashMap;
+use self::yaml_rust::{YamlLoader, Yaml};
 
-pub fn parse(contents: String) {
-    let docs = YamlLoader::load_from_str(&contents).unwrap();
+pub fn parse(contents: String) -> LinkedHashMap<Yaml, Yaml> {
+    let mut docs = YamlLoader::load_from_str(&contents).unwrap();
+    let doc = docs.pop().unwrap();
 
-    // Multi document support, doc is a yaml::Yaml
-    let doc = &docs[0];
-
-    // Debug support
-    // println!("{:?}", doc);
-    
-    // Dump the YAML object
-    let mut out_str = String::new();
-    {
-        let mut emitter = YamlEmitter::new(&mut out_str);
-        emitter.dump(doc).unwrap(); // dump the YAML object to a String
-    }
-    println!("{}", out_str);
+    match doc {
+        Yaml::Hash(doc) => return doc,
+        _ => panic!("Unsupported Puzzles.yml structure!")
+    };
 }

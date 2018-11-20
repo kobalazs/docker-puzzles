@@ -4,4 +4,5 @@ version = "0.1.0"
 authors = ["Balázs Kovács <kobalazs@gmail.com>"]
 
 [dependencies]
+linked-hash-map = "0.5.1"
 yaml-rust = "0.4.2"
