@@ -6,14 +6,13 @@ use docker_puzzles::{fs_handler, puzzles_parser};
 fn main() {
     let path = String::from("./assets");
 
-    print!("\nPuzzle definitions\n");
-    let definitions = puzzles_parser::get_definitions(path);
-    print!("{:?}\n", definitions);
+    let puzzles = puzzles_parser::get_puzzles(path);
+    print!("\n[php-libs]\n{:?}\n", puzzles.get("php-libs"));
     
     print!("\nPuzzlefile\n");
-    let puzzles_paths = fs_handler::collect_files(String::from("./assets"), String::from("Puzzlefile"));
-    for puzzles_path in &puzzles_paths {
-        let content = fs::read_to_string(puzzles_path).expect("Cannot open file");
+    let puzzlefiles = fs_handler::collect_files(String::from("./assets"), String::from("Puzzlefile"));
+    for puzzlefile in &puzzlefiles {
+        let content = fs::read_to_string(puzzlefile).expect("Cannot open file");
         print!("{:?}\n", content);
     }
 }
