@@ -1,3 +1,4 @@
+pub mod fs_handler;
 pub mod puzzles_parser;
 
 #[cfg(test)]
