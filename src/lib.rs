@@ -1,3 +1,4 @@
+pub mod dockerfile_builder;
 pub mod fs_handler;
 pub mod puzzles_parser;
 
