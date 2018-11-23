@@ -30,7 +30,7 @@ fn parse_puzzles(contents: String) -> HashMap<String, String> {
             _ => panic!("Unsupported Puzzles.yml key"),
         };
         let value = match value {
-            Yaml::String(value) => value.to_string(),
+            Yaml::String(value) => value.replace("\\", "\\\n   "),
             _ => panic!("Unsupported Puzzles.yml value"),
         };
         puzzles.insert(key, value);
