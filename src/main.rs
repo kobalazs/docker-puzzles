@@ -1,13 +1,16 @@
 extern crate docker_puzzles;
 
-use docker_puzzles::{dockerfile_builder, fs_handler, puzzles_parser};
+use std::{env, process};
+use docker_puzzles::{config::Config};
 
 fn main() {
-    let path = String::from("./assets");
-    let puzzles = puzzles_parser::get_puzzles(path);
+    let config = Config::new(env::args()).unwrap_or_else(|error| {
+        eprintln!("Problem parsing arguments: {}", error);
+        process::exit(1);
+    });
 
-    let puzzlefiles = fs_handler::collect_files(String::from("./assets"), String::from("Puzzlefile"));
-    for puzzlefile in &puzzlefiles {
-        dockerfile_builder::build(puzzlefile, &puzzles);
+    if let Err(error) = docker_puzzles::run(config) {
+        eprintln!("Application error: {}", error);
+        process::exit(1);
     }
 }

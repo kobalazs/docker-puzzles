@@ -1,10 +1,13 @@
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::error::Error;
 
-pub fn collect_files(path: String, file_name: String) -> Vec<PathBuf> {
+pub fn collect_files(path: &str, file_name: String) -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let path = Path::new(&path);
+    let directory = path.read_dir()?;
+
     let mut file_paths = Vec::new();
-    for entry in path.read_dir().expect("Cannot open directory") {
+    for entry in directory {
         if let Ok(entry) = entry {
             let actual_path = entry.path();
             let actual_file_name = actual_path.file_name();
@@ -15,7 +18,7 @@ pub fn collect_files(path: String, file_name: String) -> Vec<PathBuf> {
             }
         }
     }
-    file_paths
+    Ok(file_paths)
 }
 
 pub fn read_file(path: &PathBuf) -> String {
