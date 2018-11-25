@@ -1,5 +1,6 @@
 pub mod config;
 pub mod dockerfile_builder;
+pub mod error;
 pub mod fs_handler;
 pub mod puzzles_parser;
 
