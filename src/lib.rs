@@ -12,7 +12,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let puzzles = puzzles_parser::get_puzzles(&config.directory)?;
     
     for puzzlefile in &puzzlefiles {
-        dockerfile_builder::build(puzzlefile, &puzzles);
+        dockerfile_builder::build(puzzlefile, &puzzles)?;
     }
 
     Ok(())

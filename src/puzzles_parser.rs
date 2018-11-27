@@ -12,7 +12,7 @@ pub fn get_puzzles(path: &str) -> Result<HashMap<String, String>, Box<dyn Error>
 
     let mut puzzles: HashMap<String, String> = HashMap::new();
     for puzzles_path in &puzzles_paths {
-        let parsed_puzzles = parse_puzzles(fs_handler::read_file(puzzles_path))?;
+        let parsed_puzzles = parse_puzzles(fs_handler::read_file(puzzles_path)?)?;
         puzzles.extend(parsed_puzzles);
     }
 
