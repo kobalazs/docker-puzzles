@@ -2,6 +2,14 @@
 name = "docker-puzzles"
 version = "0.1.0"
 authors = ["Balázs Kovács <kobalazs@gmail.com>"]
+description = "Docker Puzzles is a CLI tool for putting together Dockerfiles from pieces."
+documentation = "https://github.com/kobalazs/docker-puzzles/blob/master/README.md"
+homepage = "https://github.com/kobalazs/docker-puzzles"
+repository = "https://github.com/kobalazs/docker-puzzles"
+readme = "README.md"
+keywords = ["docker", "puzzle", "compose", "Dockerfile"]
+categories = ["development-tools", "filesystem", "parsing", "text-processing"]
+license = "CC-BY-NC-SA-4.0"
 
 [dependencies]
 linked-hash-map = "0.5.1"
