@@ -14,7 +14,7 @@ pub fn build(puzzlefile_path: &Path, puzzles: &HashMap<String, String>) -> Resul
 
     for line in BufReader::new(puzzlefile).lines() {
         let input = line.unwrap();
-        let output = parse_line(input, puzzles) + "\n";
+        let output = parse_line(input, puzzles)? + "\n";
         dockerfile.write(output.as_bytes())?;
     }
 
@@ -30,11 +30,14 @@ fn get_dockerfile_path(puzzlefile_path: &Path) -> Result<String, Box<dyn Error>>
     Err(UserError::boxed("Cannot find parent directory"))
 }
 
-fn parse_line(input: String, puzzles: &HashMap<String, String>) -> String {
+fn parse_line(input: String, puzzles: &HashMap<String, String>) -> Result<String, Box<dyn Error>> {
     let regex = Regex::new(r"^PUZZLE (.+)").unwrap();
     if regex.is_match(&input) {
         let captures = regex.captures(&input).unwrap();
-        return puzzles.get(&captures[1]).expect("Undefined puzzle").to_string();
+        return match puzzles.get(&captures[1]) {
+            Some(puzzle) => Ok(puzzle.to_string()),
+            None => Err(UserError::boxed("Undefined puzzle"))
+        }
     }
-    input
+    Ok(input)
 }

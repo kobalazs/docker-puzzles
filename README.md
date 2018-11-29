@@ -2,7 +2,11 @@
 Docker Puzzles is a CLI tool for putting together Dockerfiles from pieces.
 
 ## Installation
-For now, use Cargo to install Docker Puzzles: `cargo install docker-puzzles`
+For now, use Cargo to install Docker Puzzles:
+```
+$ cargo install docker-puzzles
+```
+(To install Cargo, follow instructions at <https://www.rust-lang.org/en-US/install.html>)
 
 ## Usage
 Run `docker-puzzles` with a parameter of the parent directory of your `Puzzles.yml`
@@ -25,7 +29,9 @@ PUZZLE echos
 ```
 
 ### Run Docker Puzzles
-`$ docker-puzzles path/to/my/project/directory`
+```
+$ docker-puzzles path/to/my/project/directory`
+```
 
 ### Dockerfile generated
 ```
