@@ -3,6 +3,7 @@ pub mod dockerfile_builder;
 pub mod error;
 pub mod fs_handler;
 pub mod puzzles_parser;
+pub mod tests;
 
 use std::error::Error;
 use config::Config;
@@ -16,12 +17,4 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     }
 
     Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
 }
