@@ -9,7 +9,7 @@ use std::error::Error;
 use config::Config;
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let puzzlefiles = fs_handler::collect_files(&config.directory, String::from("Puzzlefile"))?;
+    let puzzlefiles = fs_handler::collect_files(&config.directory, "Puzzlefile")?;
     let puzzles = puzzles_parser::get_puzzles(&config.directory)?;
     
     for puzzlefile in &puzzlefiles {

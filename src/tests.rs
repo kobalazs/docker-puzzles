@@ -11,7 +11,7 @@ fn calling_without_args() {
         .expect("Failed to execute process");
 
     assert_eq!(
-        "Problem parsing arguments: Didn\'t get a directory string\n",
+        "Problem parsing arguments: Didn't get a directory argument\n",
         String::from_utf8_lossy(&output.stderr)
     );
 }

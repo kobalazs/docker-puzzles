@@ -8,7 +8,7 @@ use fs_handler;
 use error::UserError;
 
 pub fn get_puzzles(path: &str) -> Result<HashMap<String, String>, Box<dyn Error>> {
-    let puzzles_paths = fs_handler::collect_files(path, String::from("Puzzles.yml"))?;
+    let puzzles_paths = fs_handler::collect_files(path, "Puzzles.yml")?;
 
     let mut puzzles: HashMap<String, String> = HashMap::new();
     for puzzles_path in &puzzles_paths {

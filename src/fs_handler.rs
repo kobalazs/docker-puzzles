@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use std::error::Error;
 use self::walkdir::WalkDir;
 
-pub fn collect_files(path: &str, file_name: String) -> Result<Vec<PathBuf>, Box<dyn Error>> {
+pub fn collect_files(path: &str, file_name: &str) -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let mut file_paths = Vec::new();
     for entry in WalkDir::new(path) {
         let entry_path = entry?.into_path();
@@ -20,4 +20,27 @@ pub fn collect_files(path: &str, file_name: String) -> Result<Vec<PathBuf>, Box<
 
 pub fn read_file(path: &Path) -> Result<String, Box<dyn Error>> {
     Ok(fs::read_to_string(path)?)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_collects_all_files() {
+        let file_paths = collect_files("./assets", "Puzzlefile").unwrap();
+        assert_eq!(2, file_paths.len());
+        assert_eq!("./assets/a/Puzzlefile", file_paths.get(0).unwrap().to_str().unwrap());
+        assert_eq!("./assets/b/Puzzlefile", file_paths.get(1).unwrap().to_str().unwrap());
+    }
+
+
+    #[test]
+    fn it_returns_error_when_calling_on_missing_directory() {
+        let error = collect_files("./non-existent-dir", "Puzzlefile").expect_err("Error expected");
+        assert_eq!(
+            "IO error for operation on ./non-existent-dir: No such file or directory (os error 2)",
+            error.to_string()
+        );
+    }
 }
