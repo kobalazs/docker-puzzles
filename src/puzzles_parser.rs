@@ -42,3 +42,21 @@ fn parse_puzzles(contents: String) -> Result<HashMap<String, String>, Box<dyn Er
 
     Ok(puzzles)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_gets_puzzles() {
+        let puzzles = get_puzzles("./assets").unwrap();
+        let key = String::from("echos");
+        let value = String::from("RUN echo \'a\' \\\n    && echo \'b\'");
+        assert_eq!(
+            [
+                (key, value)
+            ].iter().cloned().collect::<HashMap<String, String>>(),
+            puzzles
+        );
+    }
+}
