@@ -1,5 +1,6 @@
 # docker-puzzles
 [![Build Status](https://travis-ci.com/kobalazs/docker-puzzles.svg?branch=master)](https://travis-ci.com/kobalazs/docker-puzzles)
+
 Docker Puzzles is a CLI tool for putting together Dockerfiles from pieces.
 
 ## Installation

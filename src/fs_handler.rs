@@ -36,10 +36,25 @@ mod tests {
 
 
     #[test]
-    fn it_returns_error_when_calling_on_missing_directory() {
+    fn it_returns_error_when_called_on_missing_directory() {
         let error = collect_files("./non-existent-dir", "Puzzlefile").expect_err("Error expected");
         assert_eq!(
             "IO error for operation on ./non-existent-dir: No such file or directory (os error 2)",
+            error.to_string()
+        );
+    }
+
+    #[test]
+    fn it_reads_a_file() {
+        let contents = read_file(&Path::new("./assets/Puzzles.yml")).unwrap();
+        assert_eq!("echos:\n    RUN echo \'a\' \\\n        && echo \'b\'\n", contents);
+    }
+
+    #[test]
+    fn it_returns_error_when_called_on_missing_file() {
+        let error = read_file(&Path::new("./non-existent-file")).expect_err("Error expected");
+        assert_eq!(
+            "No such file or directory (os error 2)",
             error.to_string()
         );
     }
