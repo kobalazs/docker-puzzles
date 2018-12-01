@@ -1,15 +1,11 @@
 language: rust
-sudo: required
-dist: trusty
-
-cache:
-  cargo: true
-
 rust:
   - stable
-
-before_script:
-  - export PATH=$PATH:~/.cargo/bin
-
+  - beta
+  - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
 script:
-  - cargo test
+  - cargo test --verbose
