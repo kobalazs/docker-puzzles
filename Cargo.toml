@@ -1,6 +1,6 @@
 [package]
 name = "docker-puzzles"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Balázs Kovács <kobalazs@gmail.com>"]
 description = "Docker Puzzles is a CLI tool for putting together Dockerfiles from pieces."
 documentation = "https://github.com/kobalazs/docker-puzzles/blob/master/README.md"
