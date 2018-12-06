@@ -2,7 +2,7 @@ use std::error::Error;
 
 #[derive(Debug, Clone)]
 pub struct UserError<'a> {
-    message: &'a str
+    message: &'a str,
 }
 
 impl<'a> UserError<'a> {

@@ -1,30 +1,28 @@
-extern crate linked_hash_map;
-extern crate yaml_rust;
-
+use crate::error::UserError;
+use crate::fs_handler;
 use std::collections::HashMap;
 use std::error::Error;
-use self::yaml_rust::{YamlLoader, Yaml};
-use fs_handler;
-use error::UserError;
+use yaml_rust::{Yaml, YamlLoader};
 
 pub fn get_puzzles(path: &str) -> Result<HashMap<String, String>, Box<dyn Error>> {
     let puzzles_paths = fs_handler::collect_files(path, "Puzzles.yml")?;
 
     let mut puzzles: HashMap<String, String> = HashMap::new();
     for puzzles_path in &puzzles_paths {
-        let parsed_puzzles = parse_puzzles(fs_handler::read_file(puzzles_path)?)?;
+        let puzzles_content = fs_handler::read_file(puzzles_path)?;
+        let parsed_puzzles = parse_puzzles(puzzles_content.as_str())?;
         puzzles.extend(parsed_puzzles);
     }
 
     Ok(puzzles)
 }
 
-fn parse_puzzles(contents: String) -> Result<HashMap<String, String>, Box<dyn Error>> {
+fn parse_puzzles(contents: &str) -> Result<HashMap<String, String>, Box<dyn Error>> {
     let mut docs = YamlLoader::load_from_str(&contents)?;
     let doc = docs.pop().unwrap();
     let entries = match doc {
         Yaml::Hash(doc) => doc,
-        _ => return Err(UserError::boxed("Unsupported Puzzles.yml structure"))
+        _ => return Err(UserError::boxed("Unsupported Puzzles.yml structure")),
     };
 
     let mut puzzles: HashMap<String, String> = HashMap::new();
@@ -53,9 +51,10 @@ mod tests {
         let key = String::from("echos");
         let value = String::from("RUN echo \'a\' \\\n    && echo \'b\'");
         assert_eq!(
-            [
-                (key, value)
-            ].iter().cloned().collect::<HashMap<String, String>>(),
+            [(key, value)]
+                .iter()
+                .cloned()
+                .collect::<HashMap<String, String>>(),
             puzzles
         );
     }

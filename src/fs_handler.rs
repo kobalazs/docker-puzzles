@@ -1,9 +1,7 @@
-extern crate walkdir;
-
+use std::error::Error;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::error::Error;
-use self::walkdir::WalkDir;
+use walkdir::WalkDir;
 
 pub fn collect_files(path: &str, file_name: &str) -> Result<Vec<PathBuf>, Box<dyn Error>> {
     let mut file_paths = Vec::new();
@@ -30,10 +28,15 @@ mod tests {
     fn it_collects_all_files() {
         let file_paths = collect_files("./assets", "Puzzlefile").unwrap();
         assert_eq!(2, file_paths.len());
-        assert_eq!("./assets/a/Puzzlefile", file_paths.get(0).unwrap().to_str().unwrap());
-        assert_eq!("./assets/b/Puzzlefile", file_paths.get(1).unwrap().to_str().unwrap());
+        assert_eq!(
+            "./assets/a/Puzzlefile",
+            file_paths.get(0).unwrap().to_str().unwrap()
+        );
+        assert_eq!(
+            "./assets/b/Puzzlefile",
+            file_paths.get(1).unwrap().to_str().unwrap()
+        );
     }
-
 
     #[test]
     fn it_returns_error_when_called_on_missing_directory() {
@@ -47,15 +50,15 @@ mod tests {
     #[test]
     fn it_reads_a_file() {
         let contents = read_file(&Path::new("./assets/Puzzles.yml")).unwrap();
-        assert_eq!("echos:\n    RUN echo \'a\' \\\n        && echo \'b\'\n", contents);
+        assert_eq!(
+            "echos:\n    RUN echo \'a\' \\\n        && echo \'b\'\n",
+            contents
+        );
     }
 
     #[test]
     fn it_returns_error_when_called_on_missing_file() {
         let error = read_file(&Path::new("./non-existent-file")).expect_err("Error expected");
-        assert_eq!(
-            "No such file or directory (os error 2)",
-            error.to_string()
-        );
+        assert_eq!("No such file or directory (os error 2)", error.to_string());
     }
 }
