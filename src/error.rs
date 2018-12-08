@@ -16,7 +16,7 @@ impl<'a> UserError<'a> {
 }
 
 impl<'a> std::fmt::Display for UserError<'a> {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.message)
     }
 }
@@ -26,7 +26,7 @@ impl<'a> Error for UserError<'a> {
         &self.message
     }
 
-    fn cause(&self) -> Option<&Error> {
+    fn cause(&self) -> Option<&dyn Error> {
         None
     }
 }

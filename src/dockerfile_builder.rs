@@ -45,3 +45,23 @@ fn parse_line<S: ::std::hash::BuildHasher>(
     }
     Ok(input)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::read_to_string;
+    use std::path::PathBuf;
+
+    #[test]
+    fn it_builds_dockerfile() {
+        let path = PathBuf::from("./assets/a/Puzzlefile");
+        let mut puzzles: HashMap<String, String> = HashMap::new();
+        puzzles.insert("echos".to_string(), "RUN echo 'Hello World'".to_string());
+
+        assert_eq!((), build(&path, &puzzles).unwrap());
+        assert_eq!(
+            "FROM ubuntu:trusty\n\nRUN echo 'Hello World'\n",
+            read_to_string("./assets/a/Dockerfile").unwrap()
+        );
+    }
+}

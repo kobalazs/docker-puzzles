@@ -28,14 +28,8 @@ mod tests {
     fn it_collects_all_files() {
         let file_paths = collect_files("./assets", "Puzzlefile").unwrap();
         assert_eq!(2, file_paths.len());
-        assert_eq!(
-            "./assets/a/Puzzlefile",
-            file_paths.get(0).unwrap().to_str().unwrap()
-        );
-        assert_eq!(
-            "./assets/b/Puzzlefile",
-            file_paths.get(1).unwrap().to_str().unwrap()
-        );
+        assert_eq!("./assets/a/Puzzlefile", file_paths[0].to_str().unwrap());
+        assert_eq!("./assets/b/Puzzlefile", file_paths[1].to_str().unwrap());
     }
 
     #[test]
